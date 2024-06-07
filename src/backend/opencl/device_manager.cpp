@@ -317,7 +317,7 @@ DeviceManager::DeviceManager()
 
     deviceENV = getEnvVar("AF_OPENCL_DEFAULT_DEVICE_TYPE");
     if (!default_device_set && !deviceENV.empty()) {
-        auto default_device_type = CL_DEVICE_TYPE_GPU;
+        cl_device_type default_device_type = CL_DEVICE_TYPE_GPU;
         if (deviceENV == "CPU") {
             default_device_type = CL_DEVICE_TYPE_CPU;
         } else if (deviceENV.compare("ACC") >= 0) {
