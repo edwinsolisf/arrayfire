@@ -261,7 +261,8 @@ DeviceManager::DeviceManager()
 
     // Create contexts and queues once the sort is done
     for (int i = 0; i < nDevices; i++) {
-        cl_platform_id device_platform =
+        // For OpenCL-HPP >= v2023.12.14 type is cl::Platform instead of cl_platform_id
+        auto device_platform =
             devices[i]->getInfo<CL_DEVICE_PLATFORM>();
         try {
             mContexts.emplace_back(
@@ -316,7 +317,7 @@ DeviceManager::DeviceManager()
 
     deviceENV = getEnvVar("AF_OPENCL_DEFAULT_DEVICE_TYPE");
     if (!default_device_set && !deviceENV.empty()) {
-        cl_device_type default_device_type = CL_DEVICE_TYPE_GPU;
+        auto default_device_type = CL_DEVICE_TYPE_GPU;
         if (deviceENV == "CPU") {
             default_device_type = CL_DEVICE_TYPE_CPU;
         } else if (deviceENV.compare("ACC") >= 0) {
