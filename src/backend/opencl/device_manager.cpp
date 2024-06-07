@@ -261,9 +261,9 @@ DeviceManager::DeviceManager()
 
     // Create contexts and queues once the sort is done
     for (int i = 0; i < nDevices; i++) {
-        // For OpenCL-HPP >= v2023.12.14 type is cl::Platform instead of cl_platform_id
-        auto device_platform =
-            devices[i]->getInfo<CL_DEVICE_PLATFORM>();
+        // For OpenCL-HPP >= v2023.12.14 type is cl::Platform instead of
+        // cl_platform_id
+        auto device_platform = devices[i]->getInfo<CL_DEVICE_PLATFORM>();
         try {
             mContexts.emplace_back(
                 make_unique<cl::Context>(mDeviceContextMap[*devices[i]]));
