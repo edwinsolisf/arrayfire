@@ -142,6 +142,7 @@ struct ComputeCapabilityToStreamingProcessors {
 // clang-format off
 static const ToolkitDriverVersions
     CudaToDriverVersion[] = {
+        {12050, 525.60f, 528.33f},
         {12040, 525.60f, 528.33f},
         {12030, 525.60f, 528.33f},
         {12020, 525.60f, 528.33f},
