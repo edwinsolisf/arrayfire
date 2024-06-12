@@ -337,8 +337,12 @@ const std::string& getActiveDeviceBaseBuildFlags() {
 }
 
 vector<Version> getOpenCLCDeviceVersion(const Device& device) {
-    Platform device_platform = device.getInfo<CL_DEVICE_PLATFORM>();
-    auto platform_version    = device_platform.getInfo<CL_PLATFORM_VERSION>();
+    // For OpenCL-HPP >= v2023.12.14 type is cl::Platform instead of
+    // cl_platform_id
+    Platform device_platform;
+    device_platform = device.getInfo<CL_DEVICE_PLATFORM>();
+
+    auto platform_version = device_platform.getInfo<CL_PLATFORM_VERSION>();
     vector<Version> out;
 
     /// The ifdef allows us to support BUILDING ArrayFire with older
@@ -540,7 +544,10 @@ void addDeviceContext(cl_device_id dev, cl_context ctx, cl_command_queue que) {
         devMngr.mDeviceTypes.push_back(
             static_cast<int>(tDevice.getInfo<CL_DEVICE_TYPE>()));
 
-        cl::Platform device_platform = tDevice.getInfo<CL_DEVICE_PLATFORM>();
+        // For OpenCL-HPP >= v2023.12.14 type is cl::Platform instead of
+        // cl_platform_id
+        cl::Platform device_platform;
+        device_platform = tDevice.getInfo<CL_DEVICE_PLATFORM>();
         devMngr.mPlatforms.push_back(
             std::make_pair<std::unique_ptr<cl::Platform>, afcl_platform>(
                 make_unique<cl::Platform>(device_platform(), true),
