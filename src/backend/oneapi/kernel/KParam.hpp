@@ -17,7 +17,7 @@
 // #endif
 
 // Defines the size and shape of the data in the OpenCL buffer
-typedef struct {
+typedef struct Kparam_st {
     dim_t dims[4];
     dim_t strides[4];
     dim_t offset;
