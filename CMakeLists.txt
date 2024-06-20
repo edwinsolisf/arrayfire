@@ -142,11 +142,7 @@ if(CMAKE_VERSION VERSION_GREATER_EQUAL 3.13)
   set(SYCL_COMPILER ON)
   set(MKL_THREADING "tbb_thread")
   set(MKL_INTERFACE "ilp64")
-<<<<<<< HEAD
-  find_package(MKL)
-=======
   find_package(MKL 2024.1)
->>>>>>> origin/3539-build-oneapi-version-2024-incompatible-for-mkl
 endif()
 
 af_multiple_option(NAME        AF_COMPUTE_LIBRARY
