@@ -101,6 +101,7 @@ static const int jetsonComputeCapabilities[] = {
 
 // clang-format off
 static const cuNVRTCcompute Toolkit2MaxCompute[] = {
+    {12050, 9, 0, 0},
     {12040, 9, 0, 0},
     {12030, 9, 0, 0},
     {12020, 9, 0, 0},
