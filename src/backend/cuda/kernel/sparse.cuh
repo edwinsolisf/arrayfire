@@ -20,7 +20,7 @@ __global__ void coo2Dense(Param<T> output, CParam<T> values, CParam<int> rowIdx,
     int id = blockIdx.x * blockDim.x * reps + threadIdx.x;
     if (id >= values.dims[0]) return;
 
-    for (int i = threadIdx.x; i <= reps * blockDim.x; i += blockDim.x) {
+    for (int i = threadIdx.x; i < reps * blockDim.x; i += blockDim.x) {
         if (i >= values.dims[0]) return;
 
         T v   = values.ptr[i];
