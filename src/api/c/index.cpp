@@ -59,6 +59,11 @@ af_index_t createSpanIndex() {
 }
 
 af_seq convert2Canonical(const af_seq s, const dim_t len) {
+    // Convert af_span to a sequence spanning the whole axis
+    if (s.begin == af_span.begin && s.end == af_span.end &&
+        s.step == af_span.step)
+        return af_seq{0, double(len - 1), 1};
+
     double begin = signbit(s.begin) ? (len + s.begin) : s.begin;
     double end   = signbit(s.end) ? (len + s.end) : s.end;
 
