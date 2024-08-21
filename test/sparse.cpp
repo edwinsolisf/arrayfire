@@ -418,8 +418,8 @@ TEST(Sparse, CPPDenseToSparseToDenseUsage) {
 }
 
 TEST(Sparse, CPPDenseToSparseConversions) {
-    array in = af::randu(100, 100);
-    in(in < 0.9) = 0;
+    array in      = af::randu(200, 200);
+    in(in < 0.75) = 0;
 
     array coo_sparse_arr = af::sparse(in, AF_STORAGE_COO);
     array csr_sparse_arr = af::sparse(in, AF_STORAGE_CSR);
@@ -430,7 +430,10 @@ TEST(Sparse, CPPDenseToSparseConversions) {
     ASSERT_ARRAYS_EQ(in, coo_dense_arr);
     ASSERT_ARRAYS_EQ(in, csr_dense_arr);
 
-    array non_zero = af::flat(in)(af::where(in));
+    array non_zero   = af::flat(in)(af::where(in));
+    array non_zero_T = af::flat(in.T())(af::where(in.T()));
     ASSERT_ARRAYS_EQ(non_zero, af::sparseGetValues(coo_sparse_arr));
-    ASSERT_ARRAYS_EQ(non_zero, af::sparseGetValues(csr_sparse_arr));
+    ASSERT_ARRAYS_EQ(
+        non_zero_T,
+        af::sparseGetValues(csr_sparse_arr));  // csr values are transposed
 }
