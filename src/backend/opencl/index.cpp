@@ -44,7 +44,7 @@ Array<T> index(const Array<T>& in, const af_index_t idxrs[]) {
         p.strds[i] = iStrds[i];
         p.steps[i] = 0;
         if (idxrs[i].isSeq) {
-            af_seq seq idxrs[i].idx.seq;
+            af_seq seq = idxrs[i].idx.seq;
             // The step for af_span used in the kernel must be 1
             if (seq.begin == af_span.begin && seq.end == af_span.end && seq.step == af_span.step)
                 p.steps[i] = 1;
