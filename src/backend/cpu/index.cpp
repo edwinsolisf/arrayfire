@@ -38,8 +38,9 @@ Array<T> index(const Array<T>& in, const af_index_t idxrs[]) {
         if (idxrs[x].isSeq) {
             af_seq seq = idxrs[x].idx.seq;
             // Handle af_span as a sequence that covers the complete axis
-            if (seq.begin == af_span.begin && seq.end == af_span.end && seq.step == af_span.step) {
-                seqs[x] = af_seq{ 0, (double)(in.dims()[x] - 1), 1 };
+            if (seq.begin == af_span.begin && seq.end == af_span.end &&
+                seq.step == af_span.step) {
+                seqs[x] = af_seq{0, (double)(in.dims()[x] - 1), 1};
             } else {
                 seqs[x] = seq;
             }
