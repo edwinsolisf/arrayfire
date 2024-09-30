@@ -6,7 +6,11 @@
 # http://arrayfire.com/licenses/BSD-3-Clause
 
 if(AF_BUILD_ONEAPI)
-  cmake_minimum_required(VERSION 3.20)
+  if (WIN32)
+    cmake_minimum_required(VERSION 3.25)
+  else()
+    cmake_minimum_required(VERSION 3.20)
+  endif()
 else()
   cmake_minimum_required(VERSION 3.16.3)
 endif()
