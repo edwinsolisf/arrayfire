@@ -5,11 +5,11 @@
 #The complete license agreement can be obtained at:
 #http:  // arrayfire.com/licenses/BSD-3-Clause
 
-if(AF_BUILD_ONEAPI)
-  if (WIN32)
+if (AF_BUILD_ONEAPI)
+    if (WIN32)
     find_package(IntelSYCL REQUIRED)
     find_package(oneDPL REQUIRED)
-    # include_directories(${SYCL_INCLUDE_DIR}/sycl)
+#include_directories(${SYCL_INCLUDE_DIR} / sycl)
     set(OPENCL_INCLUDE_DIR ${SYCL_INCLUDE_DIR}/sycl)
     set(OPENCL_LIBRARY_DIR ${SYCL_LIBRARY_DIR})
   else()
@@ -382,7 +382,6 @@ target_link_libraries(afoneapi
     c_api_interface
     cpp_api_interface
     afoneapi)
-
 
 #af_split_debug_info(afoneapi ${AF_INSTALL_LIB_DIR})
 
