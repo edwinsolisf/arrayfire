@@ -151,7 +151,7 @@ if(CMAKE_VERSION VERSION_GREATER_EQUAL 3.13)
   endif()
   set(MKL_THREADING "tbb_thread")
   set(MKL_INTERFACE "ilp64")
-  find_package(MKL 2024.1)
+  find_package(MKL)
 endif()
 
 af_multiple_option(NAME        AF_COMPUTE_LIBRARY
