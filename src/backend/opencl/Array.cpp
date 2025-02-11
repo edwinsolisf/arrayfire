@@ -201,10 +201,12 @@ void checkAndMigrate(Array<T> &arr) {
         AF_TRACE("Migrating array from {} to {}.", arr_id, cur_id);
         auto migrated_data           = memAlloc<T>(arr.elements());
         void *mapped_migrated_buffer = getQueue().enqueueMapBuffer(
-            *migrated_data, CL_TRUE, CL_MAP_READ, 0, arr.elements());
+            *migrated_data, CL_TRUE, CL_MAP_WRITE_INVALIDATE_REGION, 0,
+            sizeof(T) * arr.elements());
         setDevice(arr_id);
         Buffer &buf = *arr.get();
-        getQueue().enqueueReadBuffer(buf, CL_TRUE, 0, arr.elements(),
+        getQueue().enqueueReadBuffer(buf, CL_TRUE, 0,
+                                     sizeof(T) * arr.elements(),
                                      mapped_migrated_buffer);
         setDevice(cur_id);
         getQueue().enqueueUnmapMemObject(*migrated_data,
@@ -444,15 +446,30 @@ Array<T> createSubArray(const Array<T> &parent, const vector<af_seq> &index,
     dim4 dDims          = parent.getDataDims();
     dim4 parent_strides = parent.strides();
 
-    if (parent.isLinear() == false) {
+    // Subarray is only possible on linear data (parent) array.
+    // Subarray of a subarray is only possible on linear data array.  Since the
+    // parent array is already a subarray, it is frequently non-linear.
+    bool data_isLinear = true;
+    dim_t count        = 1;
+    for (dim_t i = 0; i < parent.ndims(); ++i) {
+        if (count != parent_strides[i]) { data_isLinear = false; }
+        count *= dDims[i];
+    }
+
+    if (!data_isLinear) {
+        if (!copy) {
+            // Linearizing parent through copy, is in conflict with the request
+            // of remaining inLine.
+            AF_ERROR("createSubArray inLine is impossible on non-Linear arrays",
+                     AF_ERR_INVALID_ARRAY);
+        }
         const Array<T> parentCopy = copyArray(parent);
         return createSubArray(parentCopy, index, copy);
     }
 
     const dim4 &pDims = parent.dims();
-
-    dim4 dims    = toDims(index, pDims);
-    dim4 strides = toStride(index, dDims);
+    dim4 dims         = toDims(index, pDims);
+    dim4 strides      = toStride(index, dDims);
 
     // Find total offsets after indexing
     dim4 offsets = toOffset(index, pDims);
