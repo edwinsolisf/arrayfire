@@ -16,13 +16,15 @@ endforeach()
 
 add_library(oneapi_sort_by_key INTERFACE)
 foreach(SBK_TYPE ${SBK_TYPES})
-  add_library(oneapi_sort_by_key_${SBK_TYPE} OBJECT
-        "${CMAKE_CURRENT_SOURCE_DIR}/kernel/sort_by_key/sort_by_key_impl.cpp"
-        "${CMAKE_CURRENT_SOURCE_DIR}/kernel/sort_by_key_impl.hpp"
-    )
+  set(oneapi_sort_by_key_sources
+    "${CMAKE_CURRENT_SOURCE_DIR}/kernel/sort_by_key/sort_by_key_impl.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/kernel/sort_by_key_impl.hpp")
+
+  add_library(oneapi_sort_by_key_${SBK_TYPE} OBJECT ${oneapi_sort_by_key_sources})
 
   target_link_libraries(oneapi_sort_by_key_${SBK_TYPE} PRIVATE oneDPL)
-  add_sycl_to_target(TARGET oneapi_sort_by_key_${SBK_TYPE})
+  add_sycl_to_target(TARGET oneapi_sort_by_key_${SBK_TYPE} 
+                  SOURCES ${oneapi_sort_by_key_sources})
 
   set_target_properties(oneapi_sort_by_key_${SBK_TYPE}
     PROPERTIES
