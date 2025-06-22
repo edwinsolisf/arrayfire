@@ -247,7 +247,7 @@ include(kernel/thrust_sort_by_key/CMakeLists.txt)
 
 add_library(afcuda
     $<$<PLATFORM_ID:Windows>:${af_cuda_ver_res_file}>
-    ${thrust_sort_sources}
+    # ${thrust_sort_sources}
 
     blas.cu
     blas.hpp
@@ -375,8 +375,8 @@ add_library(afcuda
     kernel/sparse.hpp
     kernel/sparse_arith.hpp
     kernel/susan.hpp
-    kernel/thrust_sort_by_key.hpp
-    kernel/thrust_sort_by_key_impl.hpp
+    # kernel/thrust_sort_by_key.hpp
+    # kernel/thrust_sort_by_key_impl.hpp
     kernel/tile.hpp
     kernel/topk.hpp
     kernel/transform.hpp
@@ -564,7 +564,7 @@ add_library(afcuda
     jit/ShiftNode.hpp
     jit/kernel_generators.hpp
 
-    ${scan_by_key_sources}
+    # ${scan_by_key_sources}
   )
 
 
@@ -917,7 +917,7 @@ source_group(include REGULAR_EXPRESSION ${ArrayFire_SOURCE_DIR}/include/*)
 source_group(api\\cpp REGULAR_EXPRESSION ${ArrayFire_SOURCE_DIR}/src/api/cpp/*)
 source_group(api\\c   REGULAR_EXPRESSION ${ArrayFire_SOURCE_DIR}/src/api/c/*)
 source_group(backend  REGULAR_EXPRESSION ${ArrayFire_SOURCE_DIR}/src/backend/common/*|${CMAKE_CURRENT_SOURCE_DIR}/*)
-source_group(backend\\kernel  REGULAR_EXPRESSION ${CMAKE_CURRENT_SOURCE_DIR}/kernel/*|${CMAKE_CURRENT_SOURCE_DIR}/kernel/thrust_sort_by_key/*|${CMAKE_CURRENT_SOURCE_DIR}/kernel/scan_by_key/*)
+# source_group(backend\\kernel  REGULAR_EXPRESSION ${CMAKE_CURRENT_SOURCE_DIR}/kernel/*|${CMAKE_CURRENT_SOURCE_DIR}/kernel/thrust_sort_by_key/*|${CMAKE_CURRENT_SOURCE_DIR}/kernel/scan_by_key/*)
 source_group("generated files"  FILES ${ArrayFire_BINARY_DIR}/src/backend/build_version.hpp ${ArrayFire_BINARY_DIR}/include/af/version.h
                                 REGULAR_EXPRESSION ${CMAKE_CURRENT_BINARY_DIR}/${kernel_headers_dir}/*)
 source_group("" FILES CMakeLists.txt)
